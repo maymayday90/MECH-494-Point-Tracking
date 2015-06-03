@@ -1,0 +1,205 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Mech494Ass1</title><meta name="generator" content="MATLAB 7.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2012-09-27"><meta name="DC.source" content="Mech494Ass1.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><pre class="codeinput">close <span class="string">all</span>
+clear
+clc
+
+a = [3;2;1];
+b = [-1;7;2];
+c = [-2;5;6];
+
+xx = [a(1),b(1),c(1)];
+yy = [a(2),b(2),c(2)];
+zz = [a(3),b(3),c(3)];
+
+LG = c;
+u = a-c;
+u = u/norm(u);
+w = cross(u,b-c);
+w = w/norm(w);
+v = cross(w,u);
+R = [u,v,w];
+
+display(<span class="string">'Pose matrix of the local system with respect to the global system'</span>)
+T = [1,0,0,0;LG,R;]
+
+display(<span class="string">'Verification of orthogonality, where the determinant = 1'</span>)
+orthofR = det(R)
+
+
+hold <span class="string">on</span>
+xlabel(<span class="string">'X-axis'</span>);
+ylabel(<span class="string">'Y-axis'</span>);
+zlabel(<span class="string">'Z-axis'</span>);
+axis([-3 4 0 8 0 8]);
+plot3(c(1),c(2),c(3),<span class="string">'*'</span>);
+plot3(xx,yy,zz,<span class="string">'o'</span>);
+line([c(1),c(1)+u(1)],[c(2),c(2)+u(2)],[c(3),c(3)+u(3)],<span class="string">'color'</span>,<span class="string">'r'</span>);
+line([c(1),c(1)+v(1)],[c(2),c(2)+v(2)],[c(3),c(3)+v(3)],<span class="string">'color'</span>,<span class="string">'g'</span>);
+line([c(1),c(1)+w(1)],[c(2),c(2)+w(2)],[c(3),c(3)+w(3)],<span class="string">'color'</span>,<span class="string">'b'</span>);
+
+
+display(<span class="string">'The direction cosines of the local i axis with respect to the global axes'</span>)
+T(2,2:4)
+
+display(<span class="string">'The direction cosines of the global K axis with respect to the local axes'</span>)
+T(2:4,4)
+
+display(<span class="string">'The angle between the local j axis and the global I'</span>)
+acos(T(3,2))*180/pi
+</pre><pre class="codeoutput">Pose matrix of the local system with respect to the global system
+
+T =
+
+    1.0000         0         0         0
+   -2.0000    0.6509   -0.1582    0.7425
+    5.0000   -0.3906    0.7689    0.5062
+    6.0000   -0.6509   -0.6195    0.4387
+
+Verification of orthogonality, where the determinant = 1
+
+orthofR =
+
+    1.0000
+
+The direction cosines of the local i axis with respect to the global axes
+
+ans =
+
+    0.6509   -0.1582    0.7425
+
+The direction cosines of the global K axis with respect to the local axes
+
+ans =
+
+    0.7425
+    0.5062
+    0.4387
+
+The angle between the local j axis and the global I
+
+ans =
+
+  112.9898
+
+</pre><img vspace="5" hspace="5" src="Mech494Ass1_01.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.13<br></p></div><!--
+##### SOURCE BEGIN #####
+close all
+clear
+clc 
+
+a = [3;2;1];
+b = [-1;7;2];
+c = [-2;5;6];
+
+xx = [a(1),b(1),c(1)];
+yy = [a(2),b(2),c(2)];
+zz = [a(3),b(3),c(3)];
+
+LG = c;
+u = a-c;
+u = u/norm(u);
+w = cross(u,b-c);
+w = w/norm(w);
+v = cross(w,u);
+R = [u,v,w];
+
+display('Pose matrix of the local system with respect to the global system')
+T = [1,0,0,0;LG,R;]
+
+display('Verification of orthogonality, where the determinant = 1')
+orthofR = det(R)
+
+
+hold on
+xlabel('X-axis');
+ylabel('Y-axis');
+zlabel('Z-axis');
+axis([-3 4 0 8 0 8]);
+plot3(c(1),c(2),c(3),'*');
+plot3(xx,yy,zz,'o');
+line([c(1),c(1)+u(1)],[c(2),c(2)+u(2)],[c(3),c(3)+u(3)],'color','r');
+line([c(1),c(1)+v(1)],[c(2),c(2)+v(2)],[c(3),c(3)+v(3)],'color','g');
+line([c(1),c(1)+w(1)],[c(2),c(2)+w(2)],[c(3),c(3)+w(3)],'color','b');
+
+
+display('The direction cosines of the local i axis with respect to the global axes')
+T(2,2:4)
+
+display('The direction cosines of the global K axis with respect to the local axes')
+T(2:4,4)
+
+display('The angle between the local j axis and the global I')
+acos(T(3,2))*180/pi
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

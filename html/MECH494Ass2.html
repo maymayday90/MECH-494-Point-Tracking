@@ -1,0 +1,506 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>MECH494Ass2</title><meta name="generator" content="MATLAB 7.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2012-10-23"><meta name="DC.source" content="MECH494Ass2.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">% MECH 494 HW#2</span>
+<span class="comment">% By: Andrew Meyer</span>
+<span class="comment">% Due: Oct 23rd 12:00PM</span>
+close <span class="string">all</span>
+clear
+clc
+</pre><pre class="codeinput"><span class="comment">%Question 1a</span>
+
+phi = 15; <span class="comment">% Define angle</span>
+
+Rx = [cosd(phi),-sind(phi),0; <span class="comment">%Plug angle into equation for rotation</span>
+        sind(phi),cosd(phi),0; <span class="comment">%about x axis (from lecture)</span>
+        0,0,1];
+display(<span class="string">'The rotation matrix around the x-axis of 15 degrees'</span>)
+Rx
+</pre><pre class="codeoutput">The rotation matrix around the x-axis of 15 degrees
+
+Rx =
+
+    0.9659   -0.2588         0
+    0.2588    0.9659         0
+         0         0    1.0000
+
+</pre><pre class="codeinput"><span class="comment">%Question 1b</span>
+
+psi = 45; <span class="comment">% Define angle</span>
+
+Rz = [1,0,0;                    <span class="comment">%Plug angle into equation for rotation</span>
+        0,cosd(psi),-sind(psi); <span class="comment">%about z axis (from lecture)</span>
+        0,sind(psi),cosd(psi)];
+display(<span class="string">'The rotation matrix around the z-axis of 45 degrees'</span>)
+Rz
+</pre><pre class="codeoutput">The rotation matrix around the z-axis of 45 degrees
+
+Rz =
+
+    1.0000         0         0
+         0    0.7071   -0.7071
+         0    0.7071    0.7071
+
+</pre><pre class="codeinput"><span class="comment">%Question 1c</span>
+
+theta = -30; <span class="comment">% Define angle</span>
+
+Ry = [cosd(theta),0,sind(theta);    <span class="comment">%Plug angle into equation for rotation</span>
+        0,1,0;                      <span class="comment">%about y axis (from lecture)</span>
+        -sind(theta),0,cosd(theta)];
+display(<span class="string">'The rotation matrix around the x-axis of -30 degrees'</span>)
+Ry
+</pre><pre class="codeoutput">The rotation matrix around the x-axis of -30 degrees
+
+Ry =
+
+    0.8660         0   -0.5000
+         0    1.0000         0
+    0.5000         0    0.8660
+
+</pre><pre class="codeinput"><span class="comment">%Question 2a</span>
+
+R1 = Rx*Rz*Ry;      <span class="comment">% Ordered combination of rotations 1-3-2</span>
+display(<span class="string">'The rotation matrix R1'</span>)
+R1
+</pre><pre class="codeoutput">The rotation matrix R1
+
+R1 =
+
+    0.9280   -0.1830   -0.3245
+   -0.1174    0.6830   -0.7209
+    0.3536    0.7071    0.6124
+
+</pre><pre class="codeinput"><span class="comment">%Question 2b</span>
+
+K2j = acosd(R1(3,2));   <span class="comment">%For global K to local j</span>
+display(<span class="string">'Angle between global K and local j'</span>)
+K2j
+</pre><pre class="codeoutput">Angle between global K and local j
+
+K2j =
+
+    45
+
+</pre><pre class="codeinput"><span class="comment">%Question 2c</span>
+
+R2 = Ry*Rz*Rx;      <span class="comment">% Ordered combination of rotations 2-3-1</span>
+display(<span class="string">'The rotation matrix R2'</span>)
+R2
+</pre><pre class="codeoutput">The rotation matrix R2
+
+R2 =
+
+    0.7450   -0.5657   -0.3536
+    0.1830    0.6830   -0.7071
+    0.6415    0.4621    0.6124
+
+</pre><pre class="codeinput"><span class="comment">%Question 2d</span>
+
+I2k = acosd(R1(1,3));      <span class="comment">%For global I to local k</span>
+display(<span class="string">'Angle between global I and local k'</span>)
+I2k
+</pre><pre class="codeoutput">Angle between global I and local k
+
+I2k =
+
+  108.9334
+
+</pre><pre class="codeinput"><span class="comment">%Question 2e</span>
+
+R21 = R2'*R1;
+display(<span class="string">'The rotation matrix of R2 relative to R1'</span>)
+R21
+</pre><pre class="codeoutput">The rotation matrix of R2 relative to R1
+
+R21 =
+
+    0.8967    0.4422    0.0191
+   -0.4417    0.8968   -0.0259
+   -0.0286    0.0148    0.9995
+
+</pre><pre class="codeinput"><span class="comment">%Question 3</span>
+
+phi = 15; <span class="comment">% Define angles for location 1</span>
+psi = 45;
+theta = -30;
+
+R1x = [cosd(phi),-sind(phi),0;   <span class="comment">% Define rotations, as done in</span>
+        sind(phi),cosd(phi),0;   <span class="comment">% question 1.</span>
+        0,0,1];
+R1z = [1,0,0;
+        0,cosd(psi),-sind(psi);
+        0,sind(psi),cosd(psi)];
+R1y = [cosd(theta),0,sind(theta);
+        0,1,0;
+        -sind(theta),0,cosd(theta)];
+
+R1 = R1x*R1z*R1y;  <span class="comment">% Multiply in the correct sequence</span>
+
+T1 = eye(4);    <span class="comment">% Start with identity matrix</span>
+T1(2:4,2:4) = R1;   <span class="comment">%Fill in rotation values</span>
+T1
+
+
+phi = 15; <span class="comment">% Define angles for location 2</span>
+psi = 45;
+theta = -30;
+
+R2x = [cosd(phi),-sind(phi),0;  <span class="comment">% Define rotations, as done in</span>
+        sind(phi),cosd(phi),0;  <span class="comment">% question 1.</span>
+        0,0,1];
+R2z = [1,0,0;
+        0,cosd(psi),-sind(psi);
+        0,sind(psi),cosd(psi)];
+R2y = [cosd(theta),0,sind(theta);
+        0,1,0;
+        -sind(theta),0,cosd(theta)];
+
+R2 = R2y*R2x*R2z;  <span class="comment">% Multiply in the correct sequence</span>
+
+T2 = eye(4);   <span class="comment">% Start with identity matrix</span>
+T2(2:4,2:4) = R2;  <span class="comment">%Fill in rotation values</span>
+T2(2:4,1) = [7,-3,4]';  <span class="comment">%Put in the tranlation vector</span>
+T2
+</pre><pre class="codeoutput">
+T1 =
+
+    1.0000         0         0         0
+         0    0.9280   -0.1830   -0.3245
+         0   -0.1174    0.6830   -0.7209
+         0    0.3536    0.7071    0.6124
+
+
+T2 =
+
+    1.0000         0         0         0
+    7.0000    0.8365   -0.5120   -0.1951
+   -3.0000    0.2588    0.6830   -0.6830
+    4.0000    0.4830    0.5209    0.7039
+
+</pre><pre class="codeinput"><span class="comment">%Part a)i)</span>
+PL = [1,3,2,5]'; <span class="comment">%Initial point</span>
+P1G = T1*PL      <span class="comment">%Transform</span>
+</pre><pre class="codeoutput">
+P1G =
+
+    1.0000
+    0.7957
+   -2.5906
+    5.5367
+
+</pre><pre class="codeinput"><span class="comment">%Part a)ii)</span>
+P2G = T2*PL      <span class="comment">%Transform</span>
+</pre><pre class="codeoutput">
+P2G =
+
+    1.0000
+    7.5102
+   -4.2726
+   10.0100
+
+</pre><pre class="codeinput"><span class="comment">%Part b)</span>
+
+inv_T1(2:4,1)=-transpose(T1(2:4,2:4))*T1(2:4,1); <span class="comment">% Invert T1 pose</span>
+inv_T1(2:4,2:4)=transpose(T1(2:4,2:4));          <span class="comment">% so it can be used</span>
+inv_T1(1,1:4)=[1 0 0 0];                         <span class="comment">% to find D12</span>
+
+D12 = T2*inv_T1; <span class="comment">% Calculate D12 (from lecture)</span>
+D12
+</pre><pre class="codeoutput">
+D12 =
+
+    1.0000         0         0         0
+    7.0000    0.9333   -0.3073   -0.1858
+   -3.0000    0.3368    0.9285    0.1562
+    4.0000    0.1245   -0.2084    0.9701
+
+</pre><pre class="codeinput"><span class="comment">%Question 4</span>
+
+R = [0.42,-0.86,-0.31;  <span class="comment">% Given rotation matrix</span>
+    0.89,0.45,-0.04;
+    0.17,-0.25,0.95];
+
+<span class="comment">%Part a)</span>
+<span class="comment">% Euler angles</span>
+display(<span class="string">'Euler angles based on given rotation matrix'</span>)
+theta = -asind(R(3,1))
+phi = atand(R(2,1)/R(1,1))
+psi = atand(R(3,2)/R(3,3))
+</pre><pre class="codeoutput">Euler angles based on given rotation matrix
+
+theta =
+
+   -9.7878
+
+
+phi =
+
+   64.7369
+
+
+psi =
+
+  -14.7436
+
+</pre><pre class="codeinput"><span class="comment">%Part b)</span>
+U = [R(3,2)-R(2,3) R(1,3)-R(3,1) R(2,1)-R(1,2)]';
+display(<span class="string">'Helical Axis Unit Vector, from T12'</span>)
+u=U/norm(U)
+
+display(<span class="string">'Rotation around the helical axis, by R'</span>)
+alpha=acosd(0.5*(trace(R)-1))
+
+<span class="comment">% As can be seen from the angles in part a), the knee has undergone a large</span>
+<span class="comment">% amount of flexion, with slight amounts of ad/adduction and</span>
+<span class="comment">% internal/external rotation.</span>
+</pre><pre class="codeoutput">Helical Axis Unit Vector, from T12
+
+u =
+
+   -0.1150
+   -0.2628
+    0.9580
+
+Rotation around the helical axis, by R
+
+alpha =
+
+   65.7952
+
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.13<br></p></div><!--
+##### SOURCE BEGIN #####
+% MECH 494 HW#2
+% By: Andrew Meyer
+% Due: Oct 23rd 12:00PM
+close all
+clear
+clc
+%%
+%Question 1a
+
+phi = 15; % Define angle
+
+Rx = [cosd(phi),-sind(phi),0; %Plug angle into equation for rotation 
+        sind(phi),cosd(phi),0; %about x axis (from lecture)
+        0,0,1];    
+display('The rotation matrix around the x-axis of 15 degrees')
+Rx
+
+%%
+%Question 1b
+
+psi = 45; % Define angle
+
+Rz = [1,0,0;                    %Plug angle into equation for rotation 
+        0,cosd(psi),-sind(psi); %about z axis (from lecture)
+        0,sind(psi),cosd(psi)];    
+display('The rotation matrix around the z-axis of 45 degrees')
+Rz
+
+%%
+%Question 1c
+
+theta = -30; % Define angle
+
+Ry = [cosd(theta),0,sind(theta);    %Plug angle into equation for rotation
+        0,1,0;                      %about y axis (from lecture)
+        -sind(theta),0,cosd(theta)];    
+display('The rotation matrix around the x-axis of -30 degrees')
+Ry
+
+%%
+%Question 2a
+
+R1 = Rx*Rz*Ry;      % Ordered combination of rotations 1-3-2
+display('The rotation matrix R1')
+R1
+
+%%
+%Question 2b
+
+K2j = acosd(R1(3,2));   %For global K to local j
+display('Angle between global K and local j')
+K2j
+
+%%
+%Question 2c
+
+R2 = Ry*Rz*Rx;      % Ordered combination of rotations 2-3-1
+display('The rotation matrix R2')
+R2
+
+%%
+%Question 2d
+
+I2k = acosd(R1(1,3));      %For global I to local k
+display('Angle between global I and local k')
+I2k
+
+%%
+%Question 2e
+
+R21 = R2'*R1;
+display('The rotation matrix of R2 relative to R1')
+R21
+
+%%
+%Question 3
+
+phi = 15; % Define angles for location 1
+psi = 45;
+theta = -30;
+
+R1x = [cosd(phi),-sind(phi),0;   % Define rotations, as done in 
+        sind(phi),cosd(phi),0;   % question 1.
+        0,0,1]; 
+R1z = [1,0,0;
+        0,cosd(psi),-sind(psi);
+        0,sind(psi),cosd(psi)];  
+R1y = [cosd(theta),0,sind(theta);
+        0,1,0;
+        -sind(theta),0,cosd(theta)]; 
+    
+R1 = R1x*R1z*R1y;  % Multiply in the correct sequence
+    
+T1 = eye(4);    % Start with identity matrix
+T1(2:4,2:4) = R1;   %Fill in rotation values
+T1
+
+
+phi = 15; % Define angles for location 2
+psi = 45;
+theta = -30;
+
+R2x = [cosd(phi),-sind(phi),0;  % Define rotations, as done in 
+        sind(phi),cosd(phi),0;  % question 1.
+        0,0,1]; 
+R2z = [1,0,0;
+        0,cosd(psi),-sind(psi);
+        0,sind(psi),cosd(psi)];  
+R2y = [cosd(theta),0,sind(theta);
+        0,1,0;
+        -sind(theta),0,cosd(theta)]; 
+    
+R2 = R2y*R2x*R2z;  % Multiply in the correct sequence
+
+T2 = eye(4);   % Start with identity matrix
+T2(2:4,2:4) = R2;  %Fill in rotation values
+T2(2:4,1) = [7,-3,4]';  %Put in the tranlation vector
+T2
+
+%%
+%Part a)i)
+PL = [1,3,2,5]'; %Initial point
+P1G = T1*PL      %Transform
+
+%%
+%Part a)ii)
+P2G = T2*PL      %Transform
+
+%%
+%Part b)
+
+inv_T1(2:4,1)=-transpose(T1(2:4,2:4))*T1(2:4,1); % Invert T1 pose
+inv_T1(2:4,2:4)=transpose(T1(2:4,2:4));          % so it can be used
+inv_T1(1,1:4)=[1 0 0 0];                         % to find D12
+
+D12 = T2*inv_T1; % Calculate D12 (from lecture)
+D12
+
+
+%%
+%Question 4
+
+R = [0.42,-0.86,-0.31;  % Given rotation matrix
+    0.89,0.45,-0.04;
+    0.17,-0.25,0.95];
+
+%Part a)
+% Euler angles
+display('Euler angles based on given rotation matrix')
+theta = -asind(R(3,1))          
+phi = atand(R(2,1)/R(1,1))
+psi = atand(R(3,2)/R(3,3))
+
+%%
+%Part b)
+U = [R(3,2)-R(2,3) R(1,3)-R(3,1) R(2,1)-R(1,2)]';
+display('Helical Axis Unit Vector, from T12')
+u=U/norm(U)
+
+display('Rotation around the helical axis, by R')
+alpha=acosd(0.5*(trace(R)-1))
+
+% As can be seen from the angles in part a), the knee has undergone a large
+% amount of flexion, with slight amounts of ad/adduction and
+% internal/external rotation. 
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
